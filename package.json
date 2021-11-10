@@ -1,0 +1,22 @@
+{
+  "name": "miakinotesplus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NayeemH/miakinotesplus.git"
+  },
+  "author": "NayeemH",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NayeemH/miakinotesplus/issues"
+  },
+  "homepage": "https://github.com/NayeemH/miakinotesplus#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
