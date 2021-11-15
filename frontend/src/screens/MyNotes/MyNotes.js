@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion, Badge, Button, Card } from "react-bootstrap";
 import MainScreen from "../../components/MainScreen";
 import { Link } from "react-router-dom";
@@ -8,9 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteNoteAction, listNotes } from "../../actions/notesActions";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
+import ShareModal from "../../components/ShareModal/ShareModal";
 
 function MyNotes({ history, search }) {
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const [selectedNote, setSelectedNote] = useState({});
 
   const noteList = useSelector((state) => state.noteList);
   const { loading, error, notes } = noteList;
@@ -55,9 +58,22 @@ function MyNotes({ history, search }) {
     }
   };
 
+  const editHandler = (note) => {
+    setSelectedNote(note);
+    setShowModal(!showModal);
+  };
+
   return (
     <MainScreen title={`Welcome Back ${userInfo && userInfo.name}..`}>
       {console.log(notes)}
+      {selectedNote && (
+        <ShareModal
+          show={showModal}
+          setShow={setShowModal}
+          id={selectedNote._id}
+          title={selectedNote.title}
+        />
+      )}
       <Link to="/createnote">
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
           Create new Note
@@ -100,7 +116,16 @@ function MyNotes({ history, search }) {
                   </span>
 
                   <div>
-                    <Button href={`/note/${note._id}`}>Edit</Button>
+                    <Button
+                      onClick={() => editHandler(note)}
+                      className="mx-2"
+                      variant="success"
+                    >
+                      Share
+                    </Button>
+                    <Button href={`/note/${note._id}`} className="mx-2">
+                      Edit
+                    </Button>
                     <Button
                       variant="danger"
                       className="mx-2"
